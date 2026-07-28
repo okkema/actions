@@ -6,6 +6,10 @@ inputs:
     description: 'Node.js version'
     required: false
     default: '20'
+  node-version-file:
+    description: 'Path to node version file (e.g. .nvmrc)'
+    required: false
+    default: ''
   registry-url:
     description: 'npm registry URL'
     required: false
@@ -25,6 +29,10 @@ inputs:
     description: 'Commit version change back to the repo after publishing'
     required: false
     default: 'false'
+  access:
+    description: 'npm access level (e.g. public for scoped packages)'
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
@@ -35,7 +43,8 @@ runs:
     - name: Setup Node.js
       uses: actions/setup-node@v7
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ inputs.node-version-file == '' && inputs.node-version || '' }}
+        node-version-file: ${{ inputs.node-version-file != '' && inputs.node-version-file || '' }}
         registry-url: ${{ inputs.registry-url }}
 
     - name: Install dependencies
@@ -48,7 +57,10 @@ runs:
       shell: bash
 
     - name: Publish to npm
-      run: npm publish${{ inputs.scope && format(' --scope {0}', inputs.scope) || '' }}
+      run: >-
+        npm publish
+        ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
+        ${{ inputs.access != '' && format('--access {0}', inputs.access) || '' }}
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
