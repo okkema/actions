@@ -10,6 +10,8 @@ Sets up Node.js and publishes a package to npm in a single step.
 | `registry-url` | No | `https://registry.npmjs.org` | npm registry URL |
 | `npm-token` | Yes | — | npm authentication token |
 | `scope` | No | — | npm scope (e.g. `@myorg`) |
+| `version` | No | — | Package version to set before publishing (e.g. `v1.2.3` or `1.2.3`) |
+| `commit` | No | `false` | Commit version change back to the repo after publishing |
 
 ## Usage
 
@@ -34,6 +36,16 @@ With a scope:
 - uses: okkema/actions/npm-publish@main
   with:
     scope: '@myorg'
+    npm-token: ${{ secrets.NPM_TOKEN }}
+```
+
+With version bump and auto-commit:
+
+```yaml
+- uses: okkema/actions/npm-publish@main
+  with:
+    version: '1.2.3'
+    commit: 'true'
     npm-token: ${{ secrets.NPM_TOKEN }}
 ```
 

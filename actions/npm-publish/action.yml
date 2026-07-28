@@ -17,6 +17,14 @@ inputs:
     description: 'npm scope (e.g. @myorg)'
     required: false
     default: ''
+  version:
+    description: 'Package version to set before publishing (e.g. v1.2.3 or 1.2.3)'
+    required: false
+    default: ''
+  commit:
+    description: 'Commit version change back to the repo after publishing'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -34,8 +42,23 @@ runs:
       run: npm ci || npm install
       shell: bash
 
+    - name: Set version
+      if: inputs.version != ''
+      run: npm version "${{ inputs.version }}" --no-git-tag-version
+      shell: bash
+
     - name: Publish to npm
       run: npm publish${{ inputs.scope && format(' --scope {0}', inputs.scope) || '' }}
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+
+    - name: Commit version
+      if: inputs.commit == 'true' && inputs.version != ''
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add package.json
+        git diff --staged --quiet || git commit -m "chore: release ${{ inputs.version }}"
+        git push
+      shell: bash
