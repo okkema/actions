@@ -1,0 +1,20 @@
+name: Validate Actions
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository 
+        uses: actions/checkout@v7
+      - name: Validate action.yml files
+        run: |
+          for f in actions/*/action.yml; do
+            echo "Validating $f"
+            python3 -c "import yaml; yaml.safe_load(open('$f'))" || exit 1
+          done

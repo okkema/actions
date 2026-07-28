@@ -1,0 +1,42 @@
+# Setup Node and Publish to npm
+
+Sets up Node.js and publishes a package to npm in a single step.
+
+## Inputs
+
+| Input | Required | Default | Description |
+|-------|----------|---------|-------------|
+| `node-version` | No | `20` | Node.js version |
+| `registry-url` | No | `https://registry.npmjs.org` | npm registry URL |
+| `npm-token` | Yes | — | npm authentication token |
+| `scope` | No | — | npm scope (e.g. `@myorg`) |
+
+## Usage
+
+```yaml
+- uses: okkema/actions/npm-publish@main
+  with:
+    npm-token: ${{ secrets.NPM_TOKEN }}
+```
+
+With a specific Node version:
+
+```yaml
+- uses: okkema/actions/npm-publish@main
+  with:
+    node-version: '18'
+    npm-token: ${{ secrets.NPM_TOKEN }}
+```
+
+With a scope:
+
+```yaml
+- uses: okkema/actions/npm-publish@main
+  with:
+    scope: '@myorg'
+    npm-token: ${{ secrets.NPM_TOKEN }}
+```
+
+## Secrets
+
+Create an `NPM_TOKEN` secret in your repository settings with a npm access token that has publish permissions.

@@ -1,0 +1,41 @@
+name: 'Setup Node and Publish to npm'
+description: 'Sets up Node.js and publishes a package to npm'
+
+inputs:
+  node-version:
+    description: 'Node.js version'
+    required: false
+    default: '20'
+  registry-url:
+    description: 'npm registry URL'
+    required: false
+    default: 'https://registry.npmjs.org'
+  npm-token:
+    description: 'npm authentication token'
+    required: true
+  scope:
+    description: 'npm scope (e.g. @myorg)'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v7
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry-url }}
+
+    - name: Install dependencies
+      run: npm ci || npm install
+      shell: bash
+
+    - name: Publish to npm
+      run: npm publish${{ inputs.scope && format(' --scope {0}', inputs.scope) || '' }}
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
