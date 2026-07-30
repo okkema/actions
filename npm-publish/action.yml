@@ -15,8 +15,9 @@ inputs:
     required: false
     default: 'https://registry.npmjs.org'
   npm-token:
-    description: 'npm authentication token'
-    required: true
+    description: 'npm authentication token (omit to use OIDC/trusted publishing)'
+    required: false
+    default: ''
   scope:
     description: 'npm scope (e.g. @myorg)'
     required: false
@@ -62,7 +63,8 @@ runs:
         fi
       shell: bash
 
-    - name: Publish to npm
+    - name: Publish to npm (token)
+      if: inputs.npm-token != ''
       run: >-
         npm publish
         ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
@@ -70,6 +72,14 @@ runs:
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+
+    - name: Publish to npm (OIDC)
+      if: inputs.npm-token == ''
+      run: >-
+        npm publish
+        ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
+        ${{ inputs.access != '' && format('--access {0}', inputs.access) || '' }}
+      shell: bash
 
     - name: Commit version
       if: inputs.commit == 'true' && inputs.version != ''
