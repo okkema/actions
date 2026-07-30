@@ -75,6 +75,8 @@ runs:
 
     - name: Publish to npm (OIDC)
       if: inputs.npm-token == ''
+      env:
+        NODE_AUTH_TOKEN: ''
       run: >-
         npm publish --provenance
         ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
