@@ -66,7 +66,7 @@ runs:
     - name: Publish to npm (token)
       if: inputs.npm-token != ''
       run: >-
-        npm publish
+        npm publish --provenance
         ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
         ${{ inputs.access != '' && format('--access {0}', inputs.access) || '' }}
       shell: bash
@@ -76,7 +76,7 @@ runs:
     - name: Publish to npm (OIDC)
       if: inputs.npm-token == ''
       run: >-
-        npm publish
+        npm publish --provenance
         ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }}
         ${{ inputs.access != '' && format('--access {0}', inputs.access) || '' }}
       shell: bash
