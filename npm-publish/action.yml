@@ -53,7 +53,13 @@ runs:
 
     - name: Set version
       if: inputs.version != ''
-      run: npm version "${{ inputs.version }}" --no-git-tag-version
+      run: |
+        CURRENT=$(node -p "require('./package.json').version")
+        DESIRED="${{ inputs.version }}"
+        DESIRED="${DESIRED#v}"
+        if [ "$CURRENT" != "$DESIRED" ]; then
+          npm version "$DESIRED" --no-git-tag-version
+        fi
       shell: bash
 
     - name: Publish to npm
