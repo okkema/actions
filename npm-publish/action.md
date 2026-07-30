@@ -18,7 +18,7 @@ Sets up Node.js and publishes a package to npm in a single step.
 ## Usage
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     npm-token: ${{ secrets.NPM_TOKEN }}
 ```
@@ -26,7 +26,7 @@ Sets up Node.js and publishes a package to npm in a single step.
 With a specific Node version:
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     node-version: '18'
     npm-token: ${{ secrets.NPM_TOKEN }}
@@ -35,7 +35,7 @@ With a specific Node version:
 With a scope:
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     scope: '@myorg'
     npm-token: ${{ secrets.NPM_TOKEN }}
@@ -44,7 +44,7 @@ With a scope:
 With version bump and auto-commit:
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     version: '1.2.3'
     commit: 'true'
@@ -54,7 +54,7 @@ With version bump and auto-commit:
 With `.nvmrc` and public access for scoped packages:
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     node-version-file: '.nvmrc'
     access: 'public'

@@ -4,22 +4,22 @@ Reusable GitHub Actions for internal use across repos.
 
 ## Actions
 
-### [npm-publish](actions/npm-publish/)
+### [npm-publish](npm-publish/)
 
 Sets up Node.js and publishes a package to npm.
 
 ```yaml
-- uses: okkema/actions/npm-publish@main
+- uses: okkema/actions/npm-publish@v2
   with:
     npm-token: ${{ secrets.NPM_TOKEN }}
 ```
 
-### [terraform](actions/terraform/)
+### [terraform](terraform/)
 
 Initializes, validates, and applies Terraform configuration.
 
 ```yaml
-- uses: okkema/actions/terraform@main
+- uses: okkema/actions/terraform@v2
   with:
     terraform-token: ${{ secrets.TF_API_TOKEN }}
 ```

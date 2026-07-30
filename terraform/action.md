@@ -13,7 +13,7 @@ Initializes, validates, and applies Terraform configuration in a single step.
 ## Usage
 
 ```yaml
-- uses: okkema/actions/terraform@main
+- uses: okkema/actions/terraform@v2
   with:
     terraform-token: ${{ secrets.TF_API_TOKEN }}
 ```
@@ -21,7 +21,7 @@ Initializes, validates, and applies Terraform configuration in a single step.
 With a specific directory and version:
 
 ```yaml
-- uses: okkema/actions/terraform@main
+- uses: okkema/actions/terraform@v2
   with:
     working-directory: 'infra'
     terraform-version: '1.5.0'
