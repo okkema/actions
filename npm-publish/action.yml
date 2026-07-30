@@ -80,7 +80,7 @@ runs:
       run: |
         nprc="${NPM_CONFIG_USERCONFIG:-.npmrc}"
         if [ -f "$nprc" ]; then
-          sed -i '/_authToken\|always-auth/d' "$nprc"
+          sed -i '/_authToken/d;/always-auth/d' "$nprc"
         fi
         npm publish --provenance \
           ${{ inputs.scope != '' && format('--scope {0}', inputs.scope) || '' }} \
