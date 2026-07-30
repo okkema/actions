@@ -1,0 +1,42 @@
+name: 'Deploy Terraform'
+description: 'Initializes, validates, and applies Terraform configuration'
+
+inputs:
+  working-directory:
+    description: 'Directory containing Terraform configuration files'
+    required: false
+    default: 'terraform'
+  terraform-version:
+    description: 'Terraform version to use'
+    required: false
+    default: ''
+  terraform-token:
+    description: 'Terraform Cloud / Enterprise API token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: ${{ inputs.terraform-version != '' && inputs.terraform-version || '' }}
+        cli_config_credentials_token: ${{ inputs.terraform-token }}
+
+    - name: Terraform Init
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: terraform init
+
+    - name: Terraform Validate
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: terraform validate -no-color
+
+    - name: Terraform Apply
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: terraform apply -auto-approve
