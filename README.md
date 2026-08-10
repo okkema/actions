@@ -16,7 +16,7 @@ Sets up Node.js and publishes a package to npm.
 
 ### [terraform](terraform/)
 
-Initializes, validates, and applies Terraform configuration.
+Initializes with provider upgrades, validates, plans, and applies Terraform configuration.
 
 ```yaml
 - uses: okkema/actions/terraform@v2

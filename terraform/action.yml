@@ -29,12 +29,17 @@ runs:
     - name: Terraform Init
       working-directory: ${{ inputs.working-directory }}
       shell: bash
-      run: terraform init
+      run: terraform init -upgrade
 
     - name: Terraform Validate
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: terraform validate -no-color
+
+    - name: Terraform Plan
+      working-directory: ${{ inputs.working-directory }}
+      shell: bash
+      run: terraform plan -no-color
 
     - name: Terraform Apply
       working-directory: ${{ inputs.working-directory }}

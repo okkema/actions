@@ -1,6 +1,6 @@
 # Deploy Terraform
 
-Initializes, validates, and applies Terraform configuration in a single step.
+Initializes with provider upgrades, validates, plans, and applies Terraform configuration in a single step.
 
 ## Inputs
 
