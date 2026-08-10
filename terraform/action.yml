@@ -13,6 +13,10 @@ inputs:
   terraform-token:
     description: 'Terraform Cloud / Enterprise API token'
     required: true
+  upgrade:
+    description: 'Upgrade Terraform providers and modules on init'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -29,7 +33,7 @@ runs:
     - name: Terraform Init
       working-directory: ${{ inputs.working-directory }}
       shell: bash
-      run: terraform init -upgrade
+      run: terraform init ${{ inputs.upgrade == 'true' && '-upgrade' || '' }}
 
     - name: Terraform Validate
       working-directory: ${{ inputs.working-directory }}

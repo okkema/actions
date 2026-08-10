@@ -1,6 +1,6 @@
 # Deploy Terraform
 
-Initializes with provider upgrades, validates, plans, and applies Terraform configuration in a single step.
+Initializes, validates, plans, and applies Terraform configuration in a single step. Set `upgrade: true` to upgrade providers and modules on init.
 
 ## Inputs
 
@@ -9,6 +9,7 @@ Initializes with provider upgrades, validates, plans, and applies Terraform conf
 | `working-directory` | No | `terraform` | Directory containing Terraform configuration files |
 | `terraform-version` | No | latest | Terraform version to use |
 | `terraform-token` | Yes | — | Terraform Cloud / Enterprise API token |
+| `upgrade` | No | `false` | Upgrade Terraform providers and modules on init |
 
 ## Usage
 
@@ -25,6 +26,7 @@ With a specific directory and version:
   with:
     working-directory: 'infra'
     terraform-version: '1.5.0'
+    upgrade: true
     terraform-token: ${{ secrets.TF_API_TOKEN }}
 ```
 
