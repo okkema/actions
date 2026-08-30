@@ -23,3 +23,13 @@ Initializes, validates, plans, and applies Terraform configuration. Set `upgrade
   with:
     terraform-token: ${{ secrets.TF_API_TOKEN }}
 ```
+
+### [dotnet-publish](dotnet-publish/)
+
+Builds, tests, packs, and publishes .NET NuGet packages.
+
+```yaml
+- uses: okkema/actions/dotnet-publish@v2
+  with:
+    nuget-token: ${{ secrets.GITHUB_TOKEN }}
+```
