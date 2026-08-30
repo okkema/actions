@@ -1,0 +1,49 @@
+name: 'Build Test and Publish .NET Packages'
+description: 'Builds, tests, packs, and publishes .NET NuGet packages'
+
+inputs:
+  dotnet-version:
+    description: '.NET SDK version to use'
+    required: false
+    default: '8.x'
+  configuration:
+    description: 'Build configuration'
+    required: false
+    default: 'Release'
+  package-source:
+    description: 'NuGet source URL to push packages to'
+    required: false
+    default: 'https://nuget.pkg.github.com/okkema/index.json'
+  nuget-token:
+    description: 'NuGet authentication token for the package source'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+        source-url: ${{ inputs.package-source }}
+      env:
+        NUGET_AUTH_TOKEN: ${{ inputs.nuget-token }}
+
+    - name: Build
+      shell: bash
+      run: dotnet build --configuration ${{ inputs.configuration }}
+
+    - name: Test
+      shell: bash
+      run: dotnet test --configuration ${{ inputs.configuration }} --no-build
+
+    - name: Pack
+      shell: bash
+      run: dotnet pack --configuration ${{ inputs.configuration }} --no-build
+
+    - name: Publish
+      shell: bash
+      run: dotnet nuget push **/bin/${{ inputs.configuration }}/*.nupkg --skip-duplicate
