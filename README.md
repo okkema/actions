@@ -33,3 +33,18 @@ Builds, tests, packs, and publishes .NET NuGet packages.
   with:
     nuget-token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+### [docker-build-push](docker-build-push/)
+
+Builds a multi-platform Docker image and pushes it to a registry.
+
+```yaml
+- uses: okkema/actions/docker-build-push@v1
+  with:
+    registry: ghcr.io
+    username: ${{ github.actor }}
+    password: ${{ secrets.GITHUB_TOKEN }}
+    image: my-image
+    context: .
+    target: production
+```
