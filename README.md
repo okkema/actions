@@ -39,7 +39,7 @@ Builds, tests, packs, and publishes .NET NuGet packages.
 Builds a multi-platform Docker image and pushes it to a registry.
 
 ```yaml
-- uses: okkema/actions/docker-build-push@v1
+- uses: okkema/actions/docker-build-push@v2
   with:
     registry: ghcr.io
     username: ${{ github.actor }}

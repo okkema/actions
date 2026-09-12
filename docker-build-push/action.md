@@ -17,7 +17,7 @@ Builds a multi-platform Docker image and pushes it to a registry in a single ste
 ## Usage
 
 ```yaml
-- uses: okkema/actions/docker-build-push@v1
+- uses: okkema/actions/docker-build-push@v2
   with:
     registry: ghcr.io
     username: ${{ github.actor }}
